@@ -1,0 +1,94 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentSentence.id">
+    <h4>Sentences</h4>
+    <div>
+      <label><strong>Phrase:</strong></label> {{ currentSentence.phrase }}
+    </div>
+    <!-- <div>
+      <label><strong>Description:</strong></label>
+      {{ currentSentence.description }}
+    </div>
+    <div>
+      <label><strong>Status:</strong></label>
+      {{ currentSentence.published ? "Published" : "Pending" }}
+    </div> -->
+
+    <a
+      class="badge badge-warning"
+      routerLink="/sentences/{{ currentSentence.id }}"
+    >
+      Edit
+    </a>
+  </div>
+
+  <div *ngIf="!currentSentence">
+    <br />
+    <p>Please click on a Sentences...</p>
+  </div>
+</div>
+
+<ng-template #editable>
+  <div *ngIf="currentSentence.id" class="edit-form">
+    <h4>Sentence</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="currentSentence.phrase"
+          name="title"
+        />
+      </div>
+      <!-- <div class="form-group">
+        <label for="description">Description</label>
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="currentSentence.description"
+          name="description"
+        />
+      </div>
+
+      <div class="form-group">
+        <label><strong>Status:</strong></label>
+        {{ currentSentence.published ? "Published" : "Pending" }}
+      </div> -->
+    </form>
+
+    <!-- <button
+      class="badge badge-primary mr-2"
+      *ngIf="currentSentence.published"
+      (click)="updatePublished(false)"
+    >
+      UnPublish
+    </button>
+    <button
+      *ngIf="!currentSentence.published"
+      class="badge badge-primary mr-2"
+      (click)="updatePublished(true)"
+    >
+      Publish
+    </button> -->
+
+    <button class="badge badge-danger mr-2" (click)="deleteSentence()">
+      Delete
+    </button>
+
+    <button
+      type="submit"
+      class="badge badge-success mb-2"
+      (click)="updateSentence()"
+    >
+      Update
+    </button>
+    <p>{{ message }}</p>
+  </div>
+
+  <div *ngIf="!currentSentence.id">
+    <br />
+    <p>Cannot access this Sentence...</p>
+  </div>
+</ng-template>

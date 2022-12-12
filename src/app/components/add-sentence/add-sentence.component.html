@@ -1,0 +1,70 @@
+<div class="container">
+
+
+  <div class="list-container">
+    <h1>{{title}}</h1>
+    <p>For more projects visit:  <a [href]="website" target="_blank">  github.com/robmasango</a></p>
+    
+    <ul class="list-group list-group-horizontal-lg">
+      <li class="list-group-item"  *ngFor="let item of wordtypes">
+        <input type="radio" [(ngModel)]="radioSelected" name="list_name" value="{{item.name}}" (change)="onItemChange(item)"/> 
+        {{item.name}}
+        
+      </li>
+    </ul>
+    <h2>List of words</h2>
+
+    <div
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      #todoList="cdkDropList"
+      [cdkDropListData]="items"
+      [cdkDropListConnectedTo]="[doneList]"
+      class="example-list2"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box2" *ngFor="let item of words" cdkDrag>{{item}}</div>
+    </div>
+  </div>
+  
+
+  <div class="list-container">
+    <h2>Sentence</h2>
+  
+    <div
+      cdkDropList
+      #doneList="cdkDropList"
+      cdkDropListOrientation="horizontal"
+      [cdkDropListData]="basket"
+      [cdkDropListConnectedTo]="[todoList]"
+      class="example-list2"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box2" *ngFor="let item of basket" cdkDrag>{{item}}</div>
+    </div>
+    
+  </div>
+</div>
+<div> 
+
+  <div class="submit-form">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="title">Phrase</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          [(ngModel)]="sentence.phrase"
+          name="title"
+        />
+      </div>
+
+      <button (click)="saveSentence()" class="btn btn-success">Submit</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>Sentence was submitted successfully!</h4>
+      <button class="btn btn-success" (click)="newSentence()">Add</button>
+    </div>
+  </div>
+</div>
